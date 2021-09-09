@@ -4,12 +4,21 @@
 <head>
   <meta charset="utf-8">
   <title>{{title}}</title>
-  <!-- <link rel="stylesheet" type="text/css" href="{% static 'hello/css/style.css' %}" /> -->
+  <!-- bootstrap -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">
+  <!-- <link rel="stylesheet" type="text/css" href="{% static 'hello/css/style.css' %}" /> -->
 </head>
 <body class="container">
-  <h1 class="display-4 text-primary mb-4">{{title}}</h1>
-  <p class="h5">{{msg}}</p>
-  <p class="h6"><a href="{% url goto %}">{{goto}}</a></p>
+  <h1 class="display-4 text-primary">{{title}}</h1>
+  <p class="h5 mt-4">{{msg}}</p>
+  <form action="{% url 'form' %}" method="post">
+    <!-- CSRF対策 -->
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="msg">message: </label>
+      <input id="msg" type="text" class="form-control" name="msg">
+    </div>
+    <input class="btn btn-primary" type="submit" value="click">
+  </form>
 </body>
 </html>
