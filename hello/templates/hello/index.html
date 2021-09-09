@@ -10,15 +10,12 @@
 </head>
 <body class="container">
   <h1 class="display-4 text-primary">{{title}}</h1>
-  <p class="h5 mt-4">{{msg}}</p>
-  <form action="{% url 'form' %}" method="post">
+  <p class="h5 mt-4">{{message|safe}}</p>
+  <form action="{% url 'index' %}" method="post">
     <!-- CSRF対策 -->
     {% csrf_token %}
-    <div class="form-group">
-      <label for="msg">message: </label>
-      <input id="msg" type="text" class="form-control" name="msg">
-    </div>
-    <input class="btn btn-primary" type="submit" value="click">
+    {{ form.as_p }}
+    <input class="btn btn-primary my-2" type="submit" value="click">
   </form>
 </body>
 </html>
