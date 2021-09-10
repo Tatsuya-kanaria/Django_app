@@ -18,10 +18,14 @@ class HelloView(TemplateView):
         return render(request, 'hello/index.html', self.params)
 
     def post(self, request):
-        msg = 'あなたは、<b>' + request.POST['name'] + \
-            '(' + request.POST['age'] + \
-            ') </b>さんです。<br>メールアドレスは <b>' + request.POST['mail'] + \
-            '</b> ですね。'
-        self.params['message'] = msg
+        if ('check' in request.POST):
+            self.params['result'] = 'Checked!!'
+        else:
+            self.params['result'] = 'Not checked...'
+        # msg = 'あなたは、<b>' + request.POST['name'] + \
+        #     '(' + request.POST['age'] + \
+        #     ') </b>さんです。<br>メールアドレスは <b>' + request.POST['mail'] + \
+        #     '</b> ですね。'
+        # self.params['message'] = msg
         self.params['form'] = HelloForm(request.POST)
         return render(request, 'hello/index.html', self.params)

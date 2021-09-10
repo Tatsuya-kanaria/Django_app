@@ -10,12 +10,17 @@
 </head>
 <body class="container">
   <h1 class="display-4 text-primary">{{title}}</h1>
-  <p class="h5 mt-4">{{message|safe}}</p>
+  <p class="h5 mt-4">{{result|safe}}</p>
   <form action="{% url 'index' %}" method="post">
     <!-- CSRF対策 -->
     {% csrf_token %}
-    {{ form.as_p }}
-    <input class="btn btn-primary my-2" type="submit" value="click">
+    <table>
+      {{ form.as_p }}
+      <tr>
+        <td></td>
+      </tr>
+      <input class="btn btn-primary my-2" type="submit" value="click">
+    </table>
   </form>
 </body>
 </html>
