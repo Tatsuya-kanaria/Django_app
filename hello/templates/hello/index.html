@@ -10,7 +10,7 @@
 </head>
 <body class="container">
   <h1 class="display-4 text-primary">{{title}}</h1>
-  <p class="h5 mt-4">{{message|safe}}</p>
+  <!-- <p class="h5 mt-4">{{message|safe}}</p> -->
   <!-- <form action="{% url 'index' %}" method="post">
     {% csrf_token %}
     {{ form }}
@@ -18,7 +18,15 @@
   </form>
   <hr> -->
   <table class="table">
-    {{data|safe}}
+    <tr>
+      <th>data</th>
+    </tr>
+  {% for item in data %}
+    <tr>
+      <td>{{item}}</td>
+    </tr>
+  {% endfor %}
+    <!-- {{data|safe}} -->
     <!-- <tr>
       <th>ID</th>
       <th>NAME</th>

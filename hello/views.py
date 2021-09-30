@@ -2,9 +2,11 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 # from django.views.generic import TemplateView
-# from .forms import HelloForm
+from django.shortcuts import redirect
 from .models import Friend
-from django.db.models import QuerySet
+# from .forms import HelloForm
+from .forms import FriendForm
+# from django.db.models import QuerySet
 
 
 # class HelloView(TemplateView):
@@ -53,27 +55,26 @@ from django.db.models import QuerySet
 # self.params['form'] = HelloForm(request.POST)
 # return render(request, 'hello/index.html', self.params)
 
-def __new_str__(self):
-    result = ''
-    for item in self:
-        result += '<tr>'
-        for k in item:
-            result += '<td>' + str(k) + '=' + str(item[k]) + '</td>'
-        result += '</tr>'
-    return result
+# def __new_str__(self):
+#     result = ''
+#     for item in self:
+#         result += '<tr>'
+#         for k in item:
+#             result += '<td>' + str(k) + '=' + str(item[k]) + '</td>'
+#         result += '</tr>'
+#     return result
 
 
-QuerySet.__str__ = __new_str__
+# QuerySet.__str__ = __new_str__
 
 
 def index(request):
     # num = Friend.objects.all().count()
     # first = Friend.objects.all().first()
     # last = Friend.objects.all().last()
-    data = Friend.objects.all().values('id', 'name', 'age')
+    data = Friend.objects.all()
     params = {
         'title': 'Hello',
-        'message': 'all friends.',
         'data': data,
         # 'form': HelloForm(),
         # 'data': [],
@@ -86,3 +87,25 @@ def index(request):
     # else:
     #     params['data'] = Friend.objects.all()
     return render(request, 'hello/index.html', params)
+
+# create model
+
+
+def create(request):
+    if (request.method == 'POST'):
+        # name = request.POST['name']
+        # mail = request.POST['mail']
+        # gender = 'gender' in request.POST
+        # age = int(request.POST['age'])
+        # birth = request.POST['birthday']
+        # friend = Friend(name=name, mail=mail, gender=gender,
+        #                 age=age, birthday=birth)
+        obj = Friend()
+        friend = FriendForm(request.POST, instance=obj)
+        friend.save()
+        return redirect(to='/hello')
+    params = {
+        'title': 'Hello',
+        'form': FriendForm(),
+    }
+    return render(request, 'hello/create.html', params)
