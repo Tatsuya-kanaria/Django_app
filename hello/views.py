@@ -123,3 +123,16 @@ def edit(request, num):
         'form': FriendForm(instance=obj),
     }
     return render(request, 'hello/edit.html', prams)
+
+
+def delete(request, num):
+    friend = Friend.objects.get(id=num)
+    if (request.method == 'POST'):
+        friend.delete()
+        return redirect(to='/hello')
+    params = {
+        'title': 'Hello',
+        'id': num,
+        'obj': friend,
+    }
+    return render(request, 'hello/delete.html', params)
