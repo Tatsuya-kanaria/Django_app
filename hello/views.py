@@ -7,6 +7,8 @@ from .models import Friend
 # from .forms import HelloForm
 from .forms import FriendForm
 # from django.db.models import QuerySet
+from django.views.generic import ListView
+from django.views.generic import DetailView
 
 
 # class HelloView(TemplateView):
@@ -136,3 +138,11 @@ def delete(request, num):
         'obj': friend,
     }
     return render(request, 'hello/delete.html', params)
+
+
+class FriendList(ListView):
+    model = Friend
+
+
+class FriendDetail(DetailView):
+    model = Friend
