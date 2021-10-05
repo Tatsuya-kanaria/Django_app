@@ -10,6 +10,7 @@ from .forms import FriendForm
 from django.views.generic import ListView
 from django.views.generic import DetailView
 from .forms import FindForm
+# from django.db.models import Q
 
 
 # class HelloView(TemplateView):
@@ -151,10 +152,11 @@ class FriendDetail(DetailView):
 
 def find(request):
     if (request.method == 'POST'):
+        msg = 'search result: '
         form = FindForm(request.POST)
         find = request.POST['find']
-        data = Friend.objects.filter(name=find)
-        msg = 'Result: ' + str(data.count())
+        list = find.split()
+        data = Friend.objects.filter(name__in=list)
     else:
         msg = 'search words...'
         form = FindForm()
