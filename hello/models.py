@@ -1,11 +1,37 @@
+import re
 from django.db import models
+from django.core.validators import MinValueValidator, MaxValueValidator, MinLengthValidator, URLValidator, RegexValidator, ValidationError
+
+'''
+MinValueValidator, MaxValueValidator,
+MinLengthValidator, MaxLengthValidator
+URLValidator
+ProhibitNullCharactersValidator  # null文字禁止
+RegexValidator  # 正規表現
+'''
+
+
+def number_only(value):
+    if (re.match(r'^[0-9]*$', value) == None):
+        raise ValidationError(
+            '%(value)s is not Number!',
+            params={'value': value}
+        )
 
 
 class Friend(models.Model):
-    name = models.CharField(max_length=100)
-    mail = models.EmailField(max_length=200)
+    name = models.CharField(max_length=100,
+                            # validators=[RegexValidator(r'^[a-z]*$')])
+                            validators=[number_only])
+    mail = models.EmailField(max_length=200,
+                             validators=[MinLengthValidator(10)])
     gender = models.BooleanField()
-    age = models.IntegerField(default=0)
+    age = models.IntegerField(
+        validators=[
+            MinValueValidator(0),
+            MaxValueValidator(150),
+        ]
+    )
     birthday = models.DateField()
 
     def __str__(self):

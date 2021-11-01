@@ -51,6 +51,45 @@ class FriendForm(forms.ModelForm):
         fields = ['name', 'mail', 'gender', 'age', 'birthday']
 
 
+
+
 class FindForm(forms.Form):
     find = forms.CharField(label='Find', required=False,
                            widget=forms.TextInput(attrs={'class': 'form-control'}))
+
+
+class CheckForm(forms.Form):
+    #  cherfield
+    # empty は半角スペースのみの入力を許可
+    # empty = forms.CharField(label='Empty', empty_value=True,
+    #                         widget=forms.TextInput(attrs={'class': 'form-control'}))
+    # min = forms.CharField(label='Min', min_length=10,
+    #                       widget=forms.TextInput(attrs={'class': 'form-control'}))
+    # max = forms.CharField(label='Max', max_length=10,
+    #                       widget=forms.TextInput(attrs={'class': 'form-control'}))
+
+    # integerfield
+    # required = forms.IntegerField(label='Required',
+    #                               widget=forms.NumberInput(attrs={'class': 'form-control'}))
+    # min = forms.IntegerField(label='Min', min_value=100,
+    #                          widget=forms.NumberInput(attrs={'class': 'form-control'}))
+    # max = forms.IntegerField(label='Max', max_value=1000,
+    #                          widget=forms.NumberInput(attrs={'class': 'form-control'}))
+
+    # datafield
+    # data = forms.DateField(label='Date', input_formats=['%d'],
+    #                        widget=forms.DateInput(attrs={'class': 'form-control'}))
+    # time = forms.TimeField(label='Time',
+    #                        widget=forms.DateInput(attrs={'class': 'form-control'}))
+    # datatime = forms.DateTimeField(label='DateTime',
+    #                                widget=forms.DateTimeInput(attrs={'class': 'form-control'}))
+
+    # バリデーションの追加
+    str = forms.CharField(label='String',
+                          widget=forms.TextInput(attrs={'class': 'form-control'}))
+
+    def clean(self):
+        cleaned_data = super().clean()
+        str = cleaned_data['str']
+        if (str.lower().startswith('no')):
+            raise forms.ValidationError('You input "NO"!')
