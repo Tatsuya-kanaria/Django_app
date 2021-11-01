@@ -13,6 +13,7 @@ from .forms import FindForm
 # from django.db.models import Q
 from django.db.models import Count, Sum, Avg, Min, Max
 from .forms import CheckForm
+from django.core.paginator import Paginator
 
 
 # class HelloView(TemplateView):
@@ -74,25 +75,26 @@ from .forms import CheckForm
 # QuerySet.__str__ = __new_str__
 
 
-def index(request):
+def index(request, num=1):
     # num = Friend.objects.all().count()
     # first = Friend.objects.all().first()
     # last = Friend.objects.all().last()
     data = Friend.objects.all()
-    re1 = Friend.objects.aggregate(Count('age'))
-    re2 = Friend.objects.aggregate(Sum('age'))
-    re3 = Friend.objects.aggregate(Avg('age'))
-    re4 = Friend.objects.aggregate(Min('age'))
-    re5 = Friend.objects.aggregate(Max('age'))
-    msg = 'count:' + str(re1['age__count']) \
-        + '<br>Sum:' + str(re2['age__sum']) \
-        + '<br>Average:' + str(re3['age__avg']) \
-        + '<br>Min:' + str(re4['age__min']) \
-        + '<br>Max:' + str(re5['age__max'])
+    page = Paginator(data, 5)
+    # re1 = Friend.objects.aggregate(Count('age'))
+    # re2 = Friend.objects.aggregate(Sum('age'))
+    # re3 = Friend.objects.aggregate(Avg('age'))
+    # re4 = Friend.objects.aggregate(Min('age'))
+    # re5 = Friend.objects.aggregate(Max('age'))
+    # msg = 'count:' + str(re1['age__count']) \
+    #     + '<br>Sum:' + str(re2['age__sum']) \
+    #     + '<br>Average:' + str(re3['age__avg']) \
+    #     + '<br>Min:' + str(re4['age__min']) \
+    #     + '<br>Max:' + str(re5['age__max'])
     params = {
         'title': 'Hello',
-        'message': msg,
-        'data': data,
+        'message': '',
+        'data': page.get_page(num),
         # 'form': HelloForm(),
         # 'data': [],
     }
