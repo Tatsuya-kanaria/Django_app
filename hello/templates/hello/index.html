@@ -26,8 +26,8 @@
       <th>age</th>
       <th>mail</th>
       <th>birthday</th>
-      <th></th>
-      <th></th>
+      <th colspan="2">edit:del</th>
+      <th>message</th>
     </tr>
   {% for item in data %}
     <tr>
@@ -38,6 +38,11 @@
       <td>{{item.birthday}}</td>
       <td><a href="{% url 'edit' item.id %}">Edit</a></td>
       <td><a href="{% url 'delete' item.id %}">Delete</a></td>
+      <td><ul>
+        {% for ob in item.message_set.all %}
+          <li>{{ob.title}}</li>
+        {% endfor %}
+      </ul></td>
     </tr>
   {% endfor %}
     <!-- {{data|safe}} -->
@@ -61,7 +66,7 @@
     </tr>
   {% endfor %} -->
   </table>
-  <ul class="pagination">
+  <ul class="pagination justify-content-center">
     {% if data.has_previous %}
       <li class="page-item">
         <a class="page-link" href="{% url 'index' %}">
