@@ -9,3 +9,6 @@ img
 /media
 /work
 /db.sqlite3
+
+# 除外
+.my_memo
