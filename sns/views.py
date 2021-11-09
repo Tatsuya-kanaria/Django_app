@@ -123,7 +123,7 @@ def groups(request):
         'create_form':createform,
         'group':sel_group,
     }
-    return render(request, 'sns/group.html', params)
+    return render(request, 'sns/groups.html', params)
 
 # Friendの追加処理
 @login_required(login_url='/admin/login/')
@@ -207,7 +207,7 @@ def post(request):
 @login_required(login_url='/admin/login/')
 def share(request, share_id):
     # シェアするMessageの取得
-    share = Message.object.get(id=share_id)
+    share = Message.objects.get(id=share_id)
     print(share)
     # POST送信時の処理
     if request.method == 'POST':
@@ -246,7 +246,7 @@ def share(request, share_id):
 @login_required(login_url='/admin/login/')
 def good(request, good_id):
     # goodするMessageを取得
-    good_msg = Message.objects.filter(owner=request.user)
+    good_msg = Message.objects.get(id=good_id)
     # 自分がメッセージにGoodした数を調べる
     is_good = Good.objects.filter(owner=request.user) \
             .filter(message=good_msg).count()
